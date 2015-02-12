@@ -1,0 +1,20 @@
+<!-- describe cocktail -->
+
+<h1>You picked...</h1>
+<h2><%= @cocktail.name %></h2>
+
+<!-- ask for a new dose -->
+<%= form_for [@cocktail, @dose] do |f| %>
+  Select ingredient:
+  <%= f.select :ingredient_id, @ingredients.map { |ingredient| [ingredient.name, ingredient.id] } %>
+  Describe dose:
+  <%= f.text_field :description %>
+  <%= f.submit %>
+<% end %>
+
+<!-- show doses -->
+
+<%@cocktail.doses.each do |dose|%>
+<li><%= dose.description %> <%= dose.ingredient.name %> <%= link_to 'Erase', cocktail_dose_path(@cocktail, dose), method: :delete %> </li>
+<% end %>
+<p><%= link_to "Back to cocktail list", cocktails_path %></p>
